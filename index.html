@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ashley ✨</title>
+    <style>
+        :root {
+            --bg-color: #120d0d;
+            --page-bg: #2d1b1b; 
+            --text-color: #e9d5b3; 
+            --accent-color: #d4a373;
+            --sparkle: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at center, #2c1a1a 0%, #000000 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+        }
+
+        /* Estrellas animadas */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: flicker var(--d) infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .book {
+            width: 380px;
+            height: 520px;
+            position: relative;
+            perspective: 1500px;
+            z-index: 10;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: var(--page-bg);
+            border: 1px solid #3d2b2b;
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: inset -10px 0 50px rgba(0,0,0,0.6), 15px 5px 30px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 45px;
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-origin: left;
+            backface-visibility: hidden;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .page.flipped { transform: rotateY(-180deg); }
+
+        h2 { font-size: 1.6rem; margin-bottom: 20px; color: var(--accent-color); text-shadow: 1px 1px 3px black; }
+        p { font-size: 1.05rem; line-height: 1.7; font-style: italic; opacity: 0.9; }
+
+        /* EL ESPEJO ADAPTABLE */
+        .mirror-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 25px;
+            min-height: 100px;
+        }
+
+        .mirror-ring {
+            min-width: 80px;
+            height: 80px;
+            padding: 0 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50px; /* Inicia como círculo, se expande a cápsula */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(212, 163, 115, 0.2);
+            position: relative;
+        }
+
+        .mirror-ring.expanded {
+            min-width: 220px; /* Se adapta al nombre */
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        #tap-text {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: opacity 0.3s;
+        }
+
+        .ashley-reveal {
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 4px;
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.6s ease-out;
+            color: #fff;
+            text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-color);
+        }
+
+        .mirror-ring.expanded .ashley-reveal {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .mirror-ring.expanded #tap-text {
+            opacity: 0;
+        }
+
+        #music-container { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    </style>
+</head>
+<body>
+
+<div id="stars-container"></div>
+
+<div id="music-container"><div id="player"></div></div>
+
+<div class="book">
+    <div class="page" style="z-index: 1;">
+        <h2>Descansa, Dra. Ashley</h2>
+        <p>Tu esfuerzo de hoy es la medicina del mañana. Duerme tranquila, lo estás haciendo increíble.</p>
+        <span style="font-size: 1.5rem; margin-top: 20px;">🌙✨🩺</span>
+    </div>
+
+    <div class="page" style="z-index: 2;">
+        <h2>Un futuro brillante</h2>
+        <p>No solo eres inteligente, eres dedicada. El éxito no te encontró por casualidad, te encontró trabajando.</p>
+    </div>
+
+    <div class="page" style="z-index: 3;">
+        <h2>Mi gran orgullo</h2>
+        <p>Gracias por permitirme ser testigo de la mujer tan maravillosa en la que te has convertido.</p>
+    </div>
+
+    <div class="page" style="z-index: 4;">
+        <h2>Sin límites</h2>
+        <p>Aparte de linda, tienes una mente prodigiosa. Nunca dudes de lo que eres capaz de lograr.</p>
+    </div>
+
+    <div class="page" style="z-index: 5;">
+        <h2>El Espejo de la Vida</h2>
+        <p>Toca el centro y mira quién tiene el mundo a sus pies...</p>
+        <div class="mirror-container">
+            <div class="mirror-ring" onclick="reveal(event)">
+                <span id="tap-text">Revelar</span>
+                <div class="ashley-reveal">ASHLEY</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" style="z-index: 6;">
+        <h2>Para un día agotador</h2>
+        <p>Inhala paz, exhala el cansancio. Lo lograste un día más, y lo hiciste con excelencia.</p>
+    </div>
+
+    <div class="page" style="z-index: 7;">
+        <h2>Justicia poética</h2>
+        <p>A veces la vida nos sonríe con buenas noticias justo cuando más esfuerzo ponemos. Disfruta tu momento.</p>
+    </div>
+
+    <div class="page" style="z-index: 8;">
+        <h2>Tu Sonrisa</h2>
+        <p>Esa pequeña curva en tu rostro tiene el poder de iluminar cualquier hospital u oficina.</p>
+    </div>
+
+    <div class="page" style="z-index: 9;">
+        <h2>Un secreto...</h2>
+        <p>Eres la prueba viviente de que la inteligencia y la bondad pueden vivir en una misma persona.</p>
+    </div>
+
+    <div class="page" style="z-index: 10; background: #3d1414;">
+        <h2 style="font-size: 2rem;">Hola, Ashley...</h2>
+        <div style="width: 40px; height: 2px; background: var(--accent-color); margin-bottom: 20px;"></div>
+        <p>Toca la hoja para abrir este pequeño refugio de sonrisas.</p>
+        <p style="font-size: 0.7rem; margin-top: 60px; opacity: 0.5;">(Con sonido ♫)</p>
+    </div>
+</div>
+
+<script>
+    // Carga de Música
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '1', width: '1', videoId: 'Hc_kwCGNhn0',
+            playerVars: { 'autoplay': 0, 'controls': 0 }
+        });
+    }
+
+    // Lógica de páginas
+    const pages = document.querySelectorAll('.page');
+    let currentPage = pages.length - 1;
+    let musicStarted = false;
+
+    pages.forEach((page, index) => {
+        page.addEventListener('click', () => {
+            if (index === currentPage && index > 0) {
+                if (index === pages.length - 1 && !musicStarted) {
+                    player.playVideo();
+                    musicStarted = true;
+                }
+                page.classList.add('flipped');
+                currentPage--;
+            }
+        });
+    });
+
+    // Lógica del Espejo
+    function reveal(e) {
+        e.stopPropagation();
+        const ring = document.querySelector('.mirror-ring');
+        ring.classList.toggle('expanded');
+    }
+
+    // Crear fondo de estrellas
+    const container = document.getElementById('stars-container');
+    for (let i = 0; i < 70; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 'px';
+        star.style.width = size;
+        star.style.height = size;
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--d', Math.random() * 3 + 2 + 's');
+        container.appendChild(star);
+    }
+</script>
+
+</body>
+</html>
